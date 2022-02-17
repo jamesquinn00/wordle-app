@@ -103,17 +103,18 @@ const MainPage = () => {
 
     return(
         <>
-        {/* {!loading ? <p> {answers[answerIndex]} </p>: <p>Loading...</p>} */}
-        {!loading ? <p> {answerWord} </p>: <p>Loading...</p>}
-        {/* {!loading ? <p> BEECH </p>: <p>Loading...</p>} */}
-        <div class="flex-container">
-            <InputRow row={1} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
-            <InputRow row={2} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
-            <InputRow row={3} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
-            <InputRow row={4} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
-            <InputRow row={5} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
-            <InputRow row={6} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
+        {!loading ? <h3> {answerWord} </h3>: <p>Loading...</p>}
+        <div className="flex-container">
+            <div>
+                <InputRow row={1} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
+                <InputRow row={2} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
+                <InputRow row={3} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
+                <InputRow row={4} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
+                <InputRow row={5} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
+                <InputRow row={6} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
+            </div>
         </div>
+        {completed ? <h3>Completed in {rowsDone} guesses!</h3> : <> </>}
         </>
     )
 }

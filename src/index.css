@@ -12,11 +12,21 @@ code {
     monospace;
 }
 
+h3{
+  text-align: center;
+}
+
+.flex-container{
+  display: flex;
+  justify-content: center;
+}
+
 .input-row{
   display: flex;
 }
 
 .input-box{
+  text-align: center;
   background-color: #dadada;
   width: 30px;
   height: 30px;

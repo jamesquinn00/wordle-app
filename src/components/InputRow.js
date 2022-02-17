@@ -32,15 +32,23 @@ const InputRow = ( {checkGuess, row, activeRow, completed} ) => {
         }
       };
 
+    function allowAlphabets(e){
+        let textInput = e.target.value;
+        textInput = textInput.replace(/[^A-Za-z ]*$/gm, ""); 
+        textInput = textInput.toUpperCase()
+        console.log(textInput)
+        e.target.value = textInput;
+    }
+
     return(
         <>
         <form name="inputRow" className="input-row">
             <AutoTabProvider>
-                <input id={row+"1"} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
-                <input id={row+"2"} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
-                <input id={row+"3"} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
-                <input id={row+"4"} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
-                <input id={row+"5"} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" onKeyUp={checkSubmit}/>
+                <input id={row+"1"} onInput={allowAlphabets} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
+                <input id={row+"2"} onInput={allowAlphabets} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
+                <input id={row+"3"} onInput={allowAlphabets} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
+                <input id={row+"4"} onInput={allowAlphabets} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
+                <input id={row+"5"} onInput={allowAlphabets} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" onKeyUp={checkSubmit}/>
             </AutoTabProvider>
         </form>
         </>
