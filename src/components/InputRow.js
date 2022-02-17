@@ -13,7 +13,6 @@ const InputRow = ( {checkGuess, row, activeRow, completed} ) => {
     useEffect( ()=> {
         if(row === activeRow && !completed){
             setDisableRow(false)
-            console.log("here")
             const myTimeout = setTimeout(focusMethod, 300);
         }
         else{
@@ -28,7 +27,13 @@ const InputRow = ( {checkGuess, row, activeRow, completed} ) => {
                 guess = guess + (e.target.parentElement.parentElement[x].value)
             }
             checkGuess(guess, row)
-            setDisableRow(true)
+            if(checkGuess(guess, row)==="invalid"){
+                setDisableRow(false)
+                pulseRed()
+            }
+            else{
+                setDisableRow(true)
+            }
         }
       };
 
@@ -36,8 +41,20 @@ const InputRow = ( {checkGuess, row, activeRow, completed} ) => {
         let textInput = e.target.value;
         textInput = textInput.replace(/[^A-Za-z ]*$/gm, ""); 
         textInput = textInput.toUpperCase()
-        console.log(textInput)
         e.target.value = textInput;
+    }
+
+    function pulseRed(){
+        for(let x=1; x<=5; x++){
+            document.getElementById(`${row}${parseInt(x)}`).style.backgroundColor="rgb(255 62 62)"
+        }
+        const myTimeout = setTimeout(returnGrey, 480);
+    }
+
+    function returnGrey(){
+        for(let x=1; x<=5; x++){
+            document.getElementById(`${row}${parseInt(x)}`).style.backgroundColor="#dadada"
+        }
     }
 
     return(

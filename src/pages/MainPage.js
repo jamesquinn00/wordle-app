@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import answerstxt from './answers.txt'
+import potentialstxt from './potentials.txt'
 import InputRow from '../components/InputRow'
+import Keyboard from '../components/Keyboard'
 
 const MainPage = () => {
 
     const [answers, setAnswers] = useState([])
+    const [potentials, setPotentials] = useState([])
     const [answerWord, setAnswerWord] = useState("")
     const [loading, setLoading] = useState(true);
     const [rowsDone, setRowsDone] = useState(0)
     const [completed, setCompleted] = useState(false)
     const [plural, setPlural] = useState("")
+
+    const [keysGuessed, setKeysGuessed]=useState({})
+    let keysObject = {}
 
     useEffect(async ()=>{
         await axios(answerstxt)
@@ -24,43 +30,58 @@ const MainPage = () => {
             setAnswers(array)
             setAnswerWord(array[answerIndex])}
             )
-        .then(setLoading(false))
+
+        await axios(potentialstxt)
+            .then(res => res.data.split("\n"))
+            .then( res => setPotentials(res))
+            .then(setLoading(false))
     },[])
 
     const checkGuess = (guess, row) => {
-        console.log("GUESS RECIEVED: ", guess)
-        // let answerArray = answers[answerIndex].split("")
-        // let answer = answers[answerIndex]
         let answerArray = answerWord.split("")
         let answer = answerWord
+        if(!answers.includes(guess.toUpperCase()) && !potentials.includes(guess.toLowerCase())){
+            return "invalid"
+        }
+        // let answer = "SLEEP"
+        // let answerArray = answer.split("")
         guess = guess.toUpperCase()
         let guessArray = guess.split("")
         let colours = ["","","","",""]
         let occurenceArray = {}
         let occurenceArrayFixed = {}
+        let guessOccurenceArray={}
         for(let x in guess){
             const occurrences = answer.split(guess[x]).length-1
+            const guessOccurrences = guess.split(guess[x]).length-1
             occurenceArray[guess[x]]=occurrences
             occurenceArrayFixed[guess[x]]=occurrences
+            guessOccurenceArray[guess[x]]=guessOccurrences
         }
         // console.log(occurenceArray)
         for(let x in guess){
+            let currentLetter = guess[x]
             let occurenceX = occurenceArray[guess[x]]
             let fixedOccurrence = occurenceArrayFixed[guess[x]]
             let yellowGreenCount = 0
             let greenCount = 0
+            // console.log(occurenceX)
             if(guess[x]===answer[x]){
                 colours[x]="G"
                 // console.log("GREEN")
                 yellowGreenCount++
                 greenCount++
                 occurenceArray[guess[x]]--
+                keysObject[guess[x]]="G"
                 if(occurenceX<=0){
+                    console.log("here")
+                    let yellowsToRemove = guessOccurenceArray[guess[x]]-fixedOccurrence
+                    // console.log(yellowsToRemove)
                     for(let i in answer){
-                        if(i!=x && guess[x]===guess[i] && colours[i]==="Y"){
+                        if(i!=x && guess[x]===guess[i] && colours[i]==="Y" && yellowsToRemove>0){
                             // console.log("REMOVING YELLOW")
                             colours[i]=""
-                            // occurenceArray[guess[x]]--
+                            yellowsToRemove--
                         }
                     }
                 }
@@ -70,6 +91,7 @@ const MainPage = () => {
                 // yellowGreenCount++
                 yellowGreenCount++
                 occurenceArray[guess[x]]--
+                keysObject[guess[x]]="Y"
                 for(let i in answer){
                     if(i!=x && guess[x]===answer[i] && occurenceX>0){
                         // console.log("YELLOW")
@@ -78,6 +100,9 @@ const MainPage = () => {
                         
                     }
                 }
+            }
+            else{
+                keysObject[guess[x]]=""
             }
         }
 
@@ -93,7 +118,6 @@ const MainPage = () => {
             }
         }
         // console.log(colours.join("").split("G").length-1)
-        console.log(`${row+1}${1}`)
        
         if(colours[0]==="G" && colours.join("").split("G").length-1===5){
             setCompleted(true)
@@ -102,6 +126,7 @@ const MainPage = () => {
         if(rowsDone>1){
             setPlural("es")
         }
+        setKeysGuessed(keysObject)
     }
 
     function refreshPage(e){
@@ -110,7 +135,9 @@ const MainPage = () => {
 
     return(
         <>
-        {!loading ? <h3> {answerWord} </h3>: <p>Loading...</p>}
+        {!loading ? <h3 className="title"> {answerWord} </h3>: <p>Loading...</p>}
+        {/* {!loading ? <h3 className="title"> SLEEP </h3>: <p>Loading...</p>} */}
+        {/* <h3 className="title">Wordle</h3> */}
         <div className="flex-container">
             <div>
                 <InputRow row={1} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
@@ -121,7 +148,9 @@ const MainPage = () => {
                 <InputRow row={6} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
             </div>
         </div>
+        {!completed ? <Keyboard keysGuessed={keysGuessed}/> : <> </>}
         {completed ? <div className="column-container"><h3>Completed in {rowsDone} guess{plural}!</h3><button id="refresh" onClick={refreshPage}>Refresh</button></div>: <> </>}
+        {rowsDone===6 && !completed ? <div className="column-container"><h3>No more guesses. The word was {answerWord}.</h3><button id="refresh" onClick={refreshPage}>Refresh</button></div>: <> </>}
         </>
     )
 }
