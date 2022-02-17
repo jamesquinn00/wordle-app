@@ -123,4 +123,13 @@ input[type="text"][disabled] {
     width: 55px;
     height: 55px;
   }
+
+  .first-row{
+    margin-top: 20px;
+  }
+
+  .letter-row>li{
+    font-size: 125%;
+    width: 19px;
+  }
 }
