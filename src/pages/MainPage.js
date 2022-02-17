@@ -43,7 +43,7 @@ const MainPage = () => {
         if(!answers.includes(guess.toUpperCase()) && !potentials.includes(guess.toLowerCase())){
             return "invalid"
         }
-        // let answer = "SLEEP"
+        // let answer = "ALTER"
         // let answerArray = answer.split("")
         guess = guess.toUpperCase()
         let guessArray = guess.split("")
@@ -102,7 +102,9 @@ const MainPage = () => {
                 }
             }
             else{
-                keysObject[guess[x]]=""
+                if(!keysObject[guess[x]]){
+                    keysObject[guess[x]]=""
+                } 
             }
         }
 
@@ -123,7 +125,7 @@ const MainPage = () => {
             setCompleted(true)
         }
         setRowsDone(rowsDone+1)
-        if(rowsDone>1){
+        if(rowsDone>=1){
             setPlural("es")
         }
         setKeysGuessed(keysObject)
@@ -135,9 +137,9 @@ const MainPage = () => {
 
     return(
         <>
-        {!loading ? <h3 className="title"> {answerWord} </h3>: <p>Loading...</p>}
-        {/* {!loading ? <h3 className="title"> SLEEP </h3>: <p>Loading...</p>} */}
-        {/* <h3 className="title">Wordle</h3> */}
+        {/* {!loading ? <h3 className="title"> {answerWord} </h3>: <p>Loading...</p>} */}
+        {/* {!loading ? <h3 className="title"> ALTER </h3>: <p>Loading...</p>} */}
+        <h3 className="title">Wordle</h3>
         <div className="flex-container">
             <div>
                 <InputRow row={1} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
@@ -148,7 +150,7 @@ const MainPage = () => {
                 <InputRow row={6} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
             </div>
         </div>
-        {!completed ? <Keyboard keysGuessed={keysGuessed}/> : <> </>}
+        {rowsDone < 6 && !completed ? <Keyboard keysGuessed={keysGuessed}/> : <> </>}
         {completed ? <div className="column-container"><h3>Completed in {rowsDone} guess{plural}!</h3><button id="refresh" onClick={refreshPage}>Refresh</button></div>: <> </>}
         {rowsDone===6 && !completed ? <div className="column-container"><h3>No more guesses. The word was {answerWord}.</h3><button id="refresh" onClick={refreshPage}>Refresh</button></div>: <> </>}
         </>

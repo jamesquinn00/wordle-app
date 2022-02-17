@@ -28,6 +28,7 @@ h3{
 .flex-container{
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .column-container{
@@ -37,12 +38,20 @@ h3{
   flex-direction: column;
 }
 
+.flex-container>div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .input-row{
   display: flex;
+  justify-content: center;
 }
 
 .input-box{
   text-align: center;
+  /* flex: 18%; */
   background-color: #dadada;
   width: 60px;
   height: 60px;
@@ -58,6 +67,11 @@ h3{
 input[type="text"][disabled] {
   color: black;
 }
+
+/* input[type="text"]:disabled {
+  color: black;
+  background-color: initial;
+} */
 
 #refresh{
   width:max-content;
@@ -94,6 +108,10 @@ input[type="text"][disabled] {
   border: rgb(95, 95, 95) 1px solid;
 }
 
+.letter-row>li:hover, .input-box:hover{
+  cursor: default;
+}
+
 .first-row{
   margin-top: 10px;
 }
@@ -120,8 +138,9 @@ input[type="text"][disabled] {
   }
 
   .input-box{
-    width: 55px;
-    height: 55px;
+    font-size: 150%;
+    width: 45px;
+    height: 45px;
   }
 
   .first-row{
@@ -131,5 +150,21 @@ input[type="text"][disabled] {
   .letter-row>li{
     font-size: 125%;
     width: 19px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .input-box{
+    font-size: 130%;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 325px) {
+  .input-box{
+    font-size: 110%;
+    width: 35px;
+    height: 35px;
   }
 }

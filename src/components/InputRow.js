@@ -46,7 +46,8 @@ const InputRow = ( {checkGuess, row, activeRow, completed} ) => {
 
     function pulseRed(){
         for(let x=1; x<=5; x++){
-            document.getElementById(`${row}${parseInt(x)}`).style.backgroundColor="rgb(255 62 62)"
+            // document.getElementById(`${row}${parseInt(x)}`).style.backgroundColor="rgb(255 62 62)"
+            document.getElementById(`${row}${parseInt(x)}`).style.backgroundColor="#f8544b"
         }
         const myTimeout = setTimeout(returnGrey, 480);
     }
