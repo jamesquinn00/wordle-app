@@ -10,6 +10,7 @@ const MainPage = () => {
     const [loading, setLoading] = useState(true);
     const [rowsDone, setRowsDone] = useState(0)
     const [completed, setCompleted] = useState(false)
+    const [plural, setPlural] = useState("")
 
     useEffect(async ()=>{
         await axios(answerstxt)
@@ -96,9 +97,11 @@ const MainPage = () => {
        
         if(colours[0]==="G" && colours.join("").split("G").length-1===5){
             setCompleted(true)
-            console.log("COMPLETED")
         }
         setRowsDone(rowsDone+1)
+        if(rowsDone>1){
+            setPlural("es")
+        }
     }
 
     return(
@@ -114,7 +117,7 @@ const MainPage = () => {
                 <InputRow row={6} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
             </div>
         </div>
-        {completed ? <h3>Completed in {rowsDone} guesses!</h3> : <> </>}
+        {completed ? <h3>Completed in {rowsDone} guess{plural}!</h3> : <> </>}
         </>
     )
 }

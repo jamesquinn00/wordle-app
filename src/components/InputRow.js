@@ -42,7 +42,7 @@ const InputRow = ( {checkGuess, row, activeRow, completed} ) => {
 
     return(
         <>
-        <form name="inputRow" className="input-row">
+        <form autoComplete="off" name="inputRow" className="input-row">
             <AutoTabProvider>
                 <input id={row+"1"} onInput={allowAlphabets} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
                 <input id={row+"2"} onInput={allowAlphabets} disabled={disableRow} className="input-box" type="text" maxLength={1} tabbable="true" />
