@@ -8,6 +8,10 @@ body {
   font-stretch: expanded;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 100%;
+    overflow-x: hidden;
+    max-height: 100%;
+    overflow-y: hidden;
 }
 
 code {
@@ -16,12 +20,20 @@ code {
 }
 
 h3{
+  font-size: 200%;
   text-align: center;
 }
 
 .flex-container{
   display: flex;
   justify-content: center;
+}
+
+.column-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .input-row{
@@ -31,9 +43,29 @@ h3{
 .input-box{
   text-align: center;
   background-color: #dadada;
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 60px;
   margin: 2px;
   border-radius: 0px;
   border: 1px black solid;
+  font-size: 200%;
+  font-family: 'Nanum Myeongjo';
+  font-weight: 700;
+}
+
+input[type="text"][disabled] {
+  color: black;
+}
+
+#refresh{
+  width:max-content;
+  text-align: center;
+  background-color: #49b449;
+  padding: 10px;
+  margin: 2px;
+  border-radius: 0px;
+  border: 1px black solid;
+  font-size: 150%;
+  font-family: 'Nanum Myeongjo';
+  font-weight: 700;
 }

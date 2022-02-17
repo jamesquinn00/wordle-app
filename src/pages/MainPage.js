@@ -86,10 +86,10 @@ const MainPage = () => {
                 document.getElementById(`${row}${parseInt(x)+1}`).style.backgroundColor="#f2bc1b"
             }
             else if(colours[x]==="G"){
-                document.getElementById(`${row}${parseInt(x)+1}`).style.backgroundColor="green"
+                document.getElementById(`${row}${parseInt(x)+1}`).style.backgroundColor="#49b449"
             }
             else if(colours[x]===""){
-                document.getElementById(`${row}${parseInt(x)+1}`).style.backgroundColor="#dadada"
+                document.getElementById(`${row}${parseInt(x)+1}`).style.backgroundColor="#bababa"
             }
         }
         // console.log(colours.join("").split("G").length-1)
@@ -102,6 +102,10 @@ const MainPage = () => {
         if(rowsDone>1){
             setPlural("es")
         }
+    }
+
+    function refreshPage(e){
+        window.location.reload()
     }
 
     return(
@@ -117,7 +121,7 @@ const MainPage = () => {
                 <InputRow row={6} activeRow={rowsDone+1} completed={completed} checkGuess={checkGuess}/>
             </div>
         </div>
-        {completed ? <h3>Completed in {rowsDone} guess{plural}!</h3> : <> </>}
+        {completed ? <div className="column-container"><h3>Completed in {rowsDone} guess{plural}!</h3><button id="refresh" onClick={refreshPage}>Refresh</button></div>: <> </>}
         </>
     )
 }
